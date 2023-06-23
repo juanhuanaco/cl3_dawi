@@ -33,6 +33,12 @@ public class MainController {
 	@Autowired
 	private ProductServiceImpl productService;
 	
+	@GetMapping("/login")
+	public String login() {
+		return "login";
+	}
+	
+	
 	@GetMapping({"/","/product/register"})
 	public String registerProduct(@ModelAttribute("product") Product product, Model model) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -42,22 +48,7 @@ public class MainController {
 			return "access_denied";
 		}
 	}
-	/*
-	@PostMapping({"/product/register"})
-	public String registerProduct(@Validated @ModelAttribute("product") Product product, boolean shouldGeneratePdf, BindingResult bindingResult) {
-
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		if(authentication.getAuthorities().stream().anyMatch(a -> a.getAuthority().contentEquals("ROLE_ADMIN"))) {
-			if (bindingResult.hasErrors() == false) {
-				productService.addProducto(product);
-				
-			}
-				
-			return "product_registration";
-		} else {
-			return "access_denied";
-		}
-	}*/
+	
 	@PostMapping({"/product/register"})
 	public ResponseEntity<ByteArrayResource> registerProduct(@Validated @ModelAttribute("product") Product product, boolean shouldGeneratePdf, BindingResult bindingResult) throws IOException, JRException {
 

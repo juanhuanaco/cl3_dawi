@@ -21,7 +21,8 @@ public class SecurityConfig {
 		http.authorizeRequests().antMatchers("/resources/**").permitAll()
 			.antMatchers("/product/register").hasRole("ADMIN")
 			.anyRequest().authenticated()
-			.and().formLogin()
+			.and().formLogin().loginPage("/login")
+			.defaultSuccessUrl("/product/register")
 			.permitAll()
 			.and().logout().permitAll();
 		return http.build();
